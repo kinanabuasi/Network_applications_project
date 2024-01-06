@@ -1,4 +1,4 @@
-// ignore_for_file: unused_import, must_call_super, avoid_print, prefer_const_constructors, use_build_context_synchronously, non_constant_identifier_names
+// ignore_for_file: unused_import, must_call_super, avoid_print, prefer_const_constructors, use_build_context_synchronously, non_constant_identifier_names, unnecessary_brace_in_string_interps
 
 import 'dart:convert';
 
@@ -10,10 +10,13 @@ import '../../core/class/statusrequest.dart';
 import '../../core/constants/routes.dart';
 import '../../core/functions/handlingdatacontroller.dart';
 import '../../data/remote/auth/login_data.dart';
+import '../../widget/TopSnackBar.dart';
+import '../groups_view_controller.dart';
 
 abstract class LoginController extends GetxController {
   login(BuildContext context);
   goToSignUp();
+  return_token();
   // goToForgetPass();
   // showpass();
 }
@@ -21,11 +24,16 @@ abstract class LoginController extends GetxController {
 class LoginControllerImp extends LoginController {
   // GlobalKey<FormState> formStateloginkey = GlobalKey();
   final formStateloginkey = GlobalKey<FormState>();
+  var EmailInitialValue = TextEditingValue(text: "kinan@gmail.com");
+  var PasswordInitialValue = TextEditingValue(text: "12345678");
   late TextEditingController email =
-      TextEditingController(text: "kinan@gmail.com");
-  late TextEditingController password = TextEditingController(text: "12345678");
+      TextEditingController.fromValue(EmailInitialValue);
+  late TextEditingController password =
+      TextEditingController.fromValue(PasswordInitialValue);
   bool isshowpass = true;
   LoginData loginData = LoginData(Get.find());
+  // GroupsListControllerIMP groupsListControllerIMP =
+  //     Get.put(GroupsListControllerIMP());
   List data = [];
 
   @override
@@ -33,16 +41,22 @@ class LoginControllerImp extends LoginController {
     if (formStateloginkey.currentState!.validate()) {
       var statusRequest = StatusRequest.loading;
       var response = await loginData.postdata(email.text, password.text);
-      print("=============================== Controller ${response.body} ");
+      // Map responsebody = jsonDecode(response.body);
+      // var token = responsebody['token'];
+      print("=============================== Controller ${response} ");
+      // print("******* token: $token ********");
+      // Map responsebody = loginData.responsebody;
+      // print(responsebody.toString());
       statusRequest = handlingData(response);
-      Map mapValue = json.decode(response.body);
-      print('Token value: ${mapValue.values.toString()}');
+      // Map mapValue = json.decode(response);
+      // print('Token value: ${mapValue.values.toString()}');
       if (StatusRequest.success == statusRequest) {
         // if (response['statue'] == "success") {
-        //   data.addAll(response['data']);
-        // print("=====******* === Controller $response ");
+        data.add(response['token']);
+        print("******* token_data $data ");
+        // }
         TopSnackBar_success(context, "Successfully Log In");
-        Get.offNamed(AppRoute.groups_view);
+        Get.toNamed(AppRoute.groups_view);
       } else {
         statusRequest = StatusRequest.failure;
         // print("=========!!!!!!!!!! Controller $response ");
@@ -51,6 +65,7 @@ class LoginControllerImp extends LoginController {
       }
       // }
       update();
+      // groupsListControllerIMP.ViewMyGroups();
     } else {}
     // print("=============================== Data $data ");
   }
@@ -83,26 +98,9 @@ class LoginControllerImp extends LoginController {
   goToSignUp() {
     Get.offNamed(AppRoute.signUp);
   }
-}
 
-TopSnackBar_success(BuildContext context, String message) {
-  // OverlayState? overlayState = Overlay.of(context);
-  showTopSnackBar(
-    Overlay.of(context)!,
-    CustomSnackBar.success(
-      message: message,
-      backgroundColor: Colors.blue,
-    ),
-  );
-}
-
-TopSnackBar_error(BuildContext context, String message) {
-  // OverlayState? overlayState = Overlay.of(context);
-  showTopSnackBar(
-    Overlay.of(context)!,
-    CustomSnackBar.success(
-      message: message,
-      backgroundColor: Colors.red,
-    ),
-  );
+  @override
+  return_token() {
+    return data;
+  }
 }

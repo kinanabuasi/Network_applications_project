@@ -142,7 +142,6 @@
 //   }
 // }
 
-
 // // Example data models
 // class Group {
 //   final String name;
@@ -324,3 +323,33 @@
 // The `itemBuilder` parameter is used to specify the widget that will be displayed for each item in the grid. In this case, we are using a conditional statement to check if the item is empty. If the item is empty, we display a "+" button. Otherwise, we display a blue container.
 
 // When the user taps on the "+" button, the `addItem()` method is called, which adds an empty string to the `items` list. This causes the `GridView.builder` widget to rebuild, and the new "+" button is displayed
+
+// class GroupsListControllerIMP extends GetxController {
+//   final groups = [].obs;
+//   late TextEditingController group_name = TextEditingController();
+//   LoginControllerImp loginControllerImp = Get.put(LoginControllerImp());
+
+//   @override
+//   ViewMyGroups() async {
+   
+//     String token = loginControllerImp.data[0];
+//     var statusRequest = StatusRequest.loading;
+//     var response = await createGroupData.getdata(token);
+  
+//     statusRequest = handlingData(response);
+//     if (StatusRequest.success == statusRequest) {
+//       print(response.values);
+ 
+//       List<dynamic> responseList = response.values();
+//       groups.addAll(responseList);
+//       print(groups);
+//     } else {
+//       statusRequest = StatusRequest.failure;
+//       print("!!!!!!!!!! Controller $response ");
+//       Get.defaultDialog(title: "Warning", middleText: "Groups is not viewed");
+//       // const CustomSnackBar.error(message: "Your Group is not created");
+//     }
+//     // }
+//     update();
+//   }
+// }

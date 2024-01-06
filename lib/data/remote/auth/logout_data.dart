@@ -7,17 +7,13 @@ import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import '../../../core/class/crud.dart';
 
-class LoginData {
+class LogoutData {
   Crud crud;
-  LoginData(this.crud);
-  postdata(
-    String email,
-    String password,
-  ) async {
-    var response = await crud
-        .postData(AppLink.login, {"email": email, "password": password},{});
-
-
+  late String token;
+  LogoutData(this.crud);
+  getdata(String token) async {
+    var response = await crud.getData(AppLink.logout, {'token': token});
+  
     return response.fold((l) => l, (r) => r);
   }
 }

@@ -7,6 +7,7 @@ import 'core/constants/routes.dart';
 import 'screen/auth/folders_view.dart';
 import 'screen/auth/login.dart';
 import 'screen/auth/signup.dart';
+import 'screen/files_view.dart';
 import 'screen/groups_view.dart';
 // import 'package:p1/test.dart';
 
@@ -22,6 +23,7 @@ List<GetPage<dynamic>>? routes = [
   GetPage(name: "/login", page: () => Login()),
   GetPage(name: "/folders_view", page: () => Folders_view()),
   GetPage(name: "/groups_view", page: () => groups_view()),
+  GetPage(name: "/files_view", page: () => files_view()),
 ];
 
 // Map<String, Widget Function(BuildContext)> routes = {

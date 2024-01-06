@@ -6,15 +6,28 @@ import 'package:p1/linkapi.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import '../../../core/class/crud.dart';
+import 'remote/auth/login_data.dart';
 
 class CreateGroupData {
   Crud crud;
   CreateGroupData(this.crud);
   postdata(
-    String groupname,
+    String groupname,String token
   ) async {
-    var response = await crud.postData(AppLink.CreateGroup,
-        {"name": groupname,});
+    var response = await crud.postData(AppLink.CreateGroup, {
+      "name": groupname,
+    }, {
+      "token":token,
+    });
+    return response.fold((l) => l, (r) => r);
+  }
+  getdata(
+    String token
+  ) async {
+    var response = await crud.getData(AppLink.ViewMyGroups, {
+      "token":token,
+    });
     return response.fold((l) => l, (r) => r);
   }
 }
+

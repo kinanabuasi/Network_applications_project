@@ -15,7 +15,8 @@ class SignupData{
       "name": username,
       "email": email,
       "password": password
-    });
+    },
+    {});
     return response.fold((l) => l, (r) => r);
   }
 }

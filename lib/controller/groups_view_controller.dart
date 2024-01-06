@@ -1,4 +1,4 @@
-// ignore_for_file: file_names, non_constant_identifier_names, override_on_non_overriding_member, avoid_print
+// ignore_for_file: file_names, non_constant_identifier_names, override_on_non_overriding_member, avoid_print, prefer_const_constructors
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -10,53 +10,91 @@ import '../core/functions/localization/validinput.dart';
 import '../data/creating_group_data.dart';
 import '../screen/auth/customlogo.dart';
 import '../screen/auth/customtextform.dart';
+import 'auth/login_controller.dart';
 
 abstract class GroupsListController extends GetxController {
   CreatingGroup();
+  ViewMyGroups();
 }
 
 class GroupsListControllerIMP extends GetxController {
   final formStategroupkey = GlobalKey<FormState>();
-  final groups = [].obs;
+  var GroupNameInitialValue = TextEditingValue(text: "MyGroup");
+  final groups = <dynamic>[].obs;
   final folders = <CustomFolderForm>[].obs;
-  late TextEditingController group_name;
+  late TextEditingController group_name = TextEditingController();
   CreateGroupData createGroupData = CreateGroupData(Get.find());
+  LoginControllerImp loginControllerImp = Get.put(LoginControllerImp());
 
   @override
   CreatingGroup() async {
     if (formStategroupkey.currentState!.validate()) {
+      // formStategroupkey.currentState!.save();
+      String token = loginControllerImp.data[0];
       var statusRequest = StatusRequest.loading;
-      var response = await createGroupData.postdata(group_name.text);
-      print("========== Controller $response ");
+      var response = await createGroupData.postdata(group_name.text, token);
+      // print("========== Controller $response ");
+
+      print("token: $token");
       statusRequest = handlingData(response);
       if (StatusRequest.success == statusRequest) {
         print("******* Controller $response ");
-        const CustomSnackBar.success(
-            message: "Your Group is successfully created");
+        // const CustomSnackBar.success(
+        //     message: "Your Group is successfully created");
       } else {
         statusRequest = StatusRequest.failure;
         print("!!!!!!!!!! Controller $response ");
         Get.defaultDialog(title: "Warning", middleText: "Group is not created");
         const CustomSnackBar.error(message: "Your Group is not created");
       }
-      // }
-      update();
-
-      // Get.offNamed(AppRoute.groups_view);
-      // } else {
-      // showDialog(context: context, builder: Text())
-      // showTopSnackBar(
-      //     context as OverlayState,
-      //     CustomSnackBar.error(
-      //       backgroundColor: Colors.redAccent,
-      //       message: "Unfortunately, your Sign In is Faild",
-      //     ),
-      //   );
-      // Get.defaultDialog(
-      //     title: "Warning",
-      //     middleText:
-      //         "Something Wrong, please check your server and try again");
     }
+    update();
+
+    // Get.offNamed(AppRoute.groups_view);
+    // } else {
+    // showDialog(context: context, builder: Text())
+    // showTopSnackBar(
+    //     context as OverlayState,
+    //     CustomSnackBar.error(
+    //       backgroundColor: Colors.redAccent,
+    //       message: "Unfortunately, your Sign In is Faild",
+    //     ),
+    //   );
+    // Get.defaultDialog(
+    //     title: "Warning",
+    //     middleText:
+    //         "Something Wrong, please check your server and try again");
+    // }
+  }
+
+  @override
+  ViewMyGroups() async {
+    // if (formStategroupkey.currentState!.validate()) {
+    // formStategroupkey.currentState!.save();
+    String token = loginControllerImp.data[0];
+    var statusRequest = StatusRequest.loading;
+    var response = await createGroupData.getdata(token);
+    // print("========== Controller $response ");
+    // print("token: $token");
+    statusRequest = handlingData(response);
+    if (StatusRequest.success == statusRequest) {
+      print(response.values);
+      // const CustomSnackBar.success(
+      //     message: "Your Groups is successfully viewed");
+      List<dynamic> responseList = response['mygroups'];
+      List<String> groupNames = responseList.cast<String>();
+      groups.assignAll(groupNames);
+      // groups.assignAll(responseList);
+      print("mygroups $groups");
+    } else {
+      statusRequest = StatusRequest.failure;
+      print("!!!!!!!!!! Controller $response ");
+      Get.defaultDialog(title: "Warning", middleText: "Groups is not viewed");
+      // const CustomSnackBar.error(message: "Your Group is not created");
+      return groups;
+    }
+    // }
+    update();
   }
 
   // print("=============================== Data $data ");
@@ -71,11 +109,11 @@ class GroupsListControllerIMP extends GetxController {
   //   // Replace this with your database logic to fetch groups
   //   // Here, we're adding static file names for demonstration purposes
   //   groups.value = [
-  //     CustomFolderForm(
-  //       image: ImageAsset.group,
-  //       address: "Group 1",
-  //       sign: "Reserved",
-  //     ),
+  // CustomFolderForm(
+  //   image: ImageAsset.group,
+  //   address: "Group 1",
+  //   sign: "Reserved",
+  // ),
   //     CustomFolderForm(
   //       image: ImageAsset.group,
   //       address: "Folder 2",
@@ -142,8 +180,8 @@ class GroupsListControllerIMP extends GetxController {
   // }
   @override
   void onInit() {
-  
     group_name = TextEditingController();
+    ViewMyGroups();
     super.onInit();
   }
 
@@ -152,6 +190,13 @@ class GroupsListControllerIMP extends GetxController {
     group_name.dispose();
     super.dispose();
   }
+
+// void confirmButtonPressed() {
+//     if (formStateGroupKey.currentState!.validate()) {
+//       formStateGroupKey.currentState!.save();
+//       groupController.creatingGroup();
+//     }
+//   }
 }
 
 class Group {

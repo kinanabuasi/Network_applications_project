@@ -1,6 +1,6 @@
 // // ignore_for_group: prefer_typing_uninitialized_variables, avoid_print, prefer_const_constructors, prefer_const_literals_to_create_immutables, unused_import
 // ignore_for_group: unused_import, camel_case_types, prefer_const_constructors, prefer_const_literals_to_create_immutables, avoid_unnecessary_containers, unused_local_variable, sized_box_for_whitespace, avoid_print, unused_element
-// ignore_for_file: unused_import, prefer_const_constructors, avoid_unnecessary_containers, unused_local_variable, void_checks, camel_case_types, non_constant_identifier_names
+// ignore_for_file: unused_import, prefer_const_constructors, avoid_unnecessary_containers, unused_local_variable, void_checks, camel_case_types, non_constant_identifier_names, use_key_in_widget_constructors, must_be_immutable, unused_element
 
 import 'package:flutter/material.dart%20';
 import 'package:get/get.dart';
@@ -12,12 +12,14 @@ import '../../constant/imageasset.dart';
 import '../../controller/Folders_view_controller.dart';
 import '../../core/constants/routes.dart';
 import '../../screen/auth/signup.dart';
+import '../controller/auth/logout_controller.dart';
 import '../controller/groups_view_controller.dart';
 import '../core/functions/localization/validinput.dart';
 import 'auth/CustomButtomAuth.dart';
 import 'auth/customtextform.dart';
 import '../../core/class/crud.dart';
 import 'auth/folders_view.dart';
+import 'files_view.dart';
 
 class groups_view extends StatelessWidget {
   groups_view({super.key});
@@ -25,30 +27,27 @@ class groups_view extends StatelessWidget {
   final GroupsListControllerIMP controller = Get.put(GroupsListControllerIMP());
   final FolderController folderController = Get.put(FolderController());
   final FileController fileController = Get.put(FileController());
+  LogoutControllerImp logoutControllerImp = Get.put(LogoutControllerImp());
 
   @override
   Widget build(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
     final double screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          controller.createGroupData;
-        },
-        child: Icon(Icons.plus_one),
-      ),
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        // actions: [
-        //   IconButton(
-        //       onPressed: () {
-        //         Get.back();
-        //       },
-        //       icon: Icon(Icons.arrow_back))
-        // ],
+        backgroundColor: Colors.yellow,
+        actions: [
+          IconButton(
+              onPressed: () {
+                Get.back();
+              },
+              icon: Icon(Icons.arrow_back))
+        ],
       ),
       drawer: Drawer(
         backgroundColor: Colors.white,
+        child: Form(
+          key: controller.formStategroupkey,
           child: ListView(
             children: [
               CustomLogoForm(
@@ -58,30 +57,14 @@ class groups_view extends StatelessWidget {
                 onTap: () {
                   // Show the dialog and wait for a result.
                   final result = Get.dialog(DialogWithTextField());
-                  if (result != null) {
-                    print('Your group name is: $result');
-                  }
-                  // Get.defaultDialog(
-                  //     content: CustomTextForm(
-                  //       hintText: "write group's name",
-                  //       iconData: Icons.group,
-                  //       isNumber: true,
-                  //       // mycontroller: controller.group_name,
-                  //     ),
-                  //     confirm: CustomButtonAuth(text: "OK", color: Colors.yellow),
-                  //     onConfirm: () {
-                  //       // controller.CreatingGroup();
-                  //       Get.back(result: controller.group_name);
-                  //     });
-                  // Group_name
-                  // controller.Dialog();
-                  // controller.CreatingGroup();
                 },
               ),
               ListTile(
                 title: Text('Select Groups'),
                 onTap: () {
                   // Handle select groups action here
+                  // Get.to(files_view());
+                  controller.ViewMyGroups();
                 },
               ),
               ListTile(
@@ -90,11 +73,19 @@ class groups_view extends StatelessWidget {
                   // Handle select groups action here
                 },
               ),
+              ListTile(
+                title: Text('Log out'),
+                onTap: () {
+                  // Handle select groups action here
+                  logoutControllerImp.logout(context);
+                },
+              ),
             ],
           ),
         ),
+      ),
       body: Form(
-        key: controller.formStategroupkey,
+        // key: controller.formStategroupkey,
         child: Container(
           // margin: EdgeInsets.all(0.1),
           // padding: EdgeInsets.all(25),
@@ -103,54 +94,64 @@ class groups_view extends StatelessWidget {
               itemCount: controller.groups.length,
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 3, // Adjust the number of columns as needed
-                mainAxisSpacing: screenWidth / 15,
+                // mainAxisSpacing: 3,
+                mainAxisSpacing: screenWidth / 12,
                 crossAxisSpacing: screenHeight / 15,
+                // mainAxisExtent: 0.5,
                 // childAspectRatio: 2,
               ),
               // padding: EdgeInsets.all(3),
               itemBuilder: (context, index) {
-                final group = controller.groups[index];
-                return Card(
-                  child: Column(
-                    children: [
-                      Text(group.name),
-                      Obx(
-                        () => GridView.builder(
-                          itemCount: folderController.folders.length,
-                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                          ),
-                          itemBuilder: (context, folderIndex) {
-                            final folder = folderController.folders[folderIndex];
-                            return Card(
-                              child: Column(
-                                children: [
-                                  // Text(folder.name),
-                                  Obx(
-                                    () => GridView.builder(
-                                      itemCount: fileController.files.length,
-                                      gridDelegate:
-                                          SliverGridDelegateWithFixedCrossAxisCount(
-                                        crossAxisCount: 2,
-                                      ),
-                                      itemBuilder: (context, fileIndex) {
-                                        final file =
-                                            fileController.files[fileIndex];
-                                        return Card(
-                                            // child: Text(file.name),
-                                            );
-                                      },
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            );
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
+                dynamic group = controller.groups[index];
+                return
+                CustomFolderForm(
+                  image: ImageAsset.group,
+                  address: group,
+                  sign: "Reserved",
                 );
+                // Card(
+                //   child: Column(
+                //     children: [
+                //       Text(group[index]),
+                      // Obx(
+                      //   () => GridView.builder(
+                      //     itemCount: folderController.folders.length,
+                      //     gridDelegate:
+                      //         SliverGridDelegateWithFixedCrossAxisCount(
+                      //       crossAxisCount: 2,
+                      //     ),
+                      //     itemBuilder: (context, folderIndex) {
+                      //       final folder =
+                      //           folderController.folders[folderIndex];
+                      //       return Card(
+                      //         child: Column(
+                      //           children: [
+                      //             // Text(folder.name),
+                      //             Obx(
+                      //               () => GridView.builder(
+                      //                 itemCount: fileController.files.length,
+                      //                 gridDelegate:
+                      //                     SliverGridDelegateWithFixedCrossAxisCount(
+                      //                   crossAxisCount: 2,
+                      //                 ),
+                      //                 itemBuilder: (context, fileIndex) {
+                      //                   final file =
+                      //                       fileController.files[fileIndex];
+                      //                   return Card(
+                      //                       // child: Text(file.name),
+                      //                       );
+                      //                 },
+                      //               ),
+                      //             ),
+                      //           ],
+                      //         ),
+                      //       );
+                      //     },
+                      //   ),
+                      // ),
+                    // ],
+                  // ),
+                // );
               },
             ),
           ),
@@ -171,11 +172,14 @@ class DialogWithTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return AlertDialog(
       title: Text("Enter group's name"),
-      content: CustomTextForm(
-        hintText: "write group's name",
-        iconData: Icons.group,
-        isNumber: true,
-        mycontroller: groupcontroller.group_name,
+      content: Form(
+        // key: groupcontroller.formStategroupkey,
+        child: CustomTextForm(
+          hintText: "write group's name",
+          iconData: Icons.group,
+          isNumber: true,
+          mycontroller: groupcontroller.group_name,
+        ),
       ),
       actions: [
         TextButton(
@@ -184,8 +188,8 @@ class DialogWithTextField extends StatelessWidget {
         ),
         TextButton(
           onPressed: () {
-            // Get.back(result: groupcontroller.group_name);
-            groupcontroller.CreatingGroup();
+            Get.back(result: groupcontroller.CreatingGroup());
+            // groupcontroller.CreatingGroup();
           },
           child: Text('Confirm'),
         ),
