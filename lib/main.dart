@@ -16,6 +16,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      // debugShowMaterialGrid: true,
       debugShowCheckedModeBanner: false,
       initialRoute: "/",
       color: Colors.white,

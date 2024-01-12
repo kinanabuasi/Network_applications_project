@@ -32,12 +32,14 @@ class LogoutControllerImp extends LogoutController {
       print(loginControllerImp.data[0]);
       statusRequest = handlingData(response);
       if (StatusRequest.success == statusRequest) {
-        TopSnackBar_success(context, "Succeccfully Logged out");
+        Get.defaultDialog(
+          title: "success", middleText: "Succeccfully Logged out");
         Get.offNamed(AppRoute.login);
       } else {
         statusRequest = StatusRequest.failure;
         // print("=========!!!!!!!!!! Controller $response ");
-        TopSnackBar_error(context, "Unfortunately, your Sign out is Faild");
+       Get.defaultDialog(
+          title: "Warning", middleText: "Unfortunately, your Sign out is Faild");
       }
       update();
     // }

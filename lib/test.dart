@@ -353,3 +353,152 @@
 //     update();
 //   }
 // }
+// _showUsersMenu(BuildContext context, TapDownDetails details) {
+//   LoginControllerImp loginControllerImp = Get.put(LoginControllerImp());
+//   final UserMenuItems = loginControllerImp.UsersNames;
+//   final UsersMenu = PopupMenuButton(
+//     child:ListView.builder(
+//               itemCount: loginControllerImp.UsersData.length,
+//           itemBuilder: ((context, index) {
+//             dynamic usersNames = loginControllerImp.UsersNames[index];
+//             return PopupMenuItem(
+//               value: usersNames,
+//               child: ListTile(
+//                 title: Text(loginControllerImp.UsersNames[index].toString()),
+//                 onTap: () {},
+//     ),);  }),
+//                   ),
+//     itemBuilder: (BuildContext context) {
+//       return UserMenuItems.map(( UserMenuItems) {
+//         // item = loginControllerImp.UsersNames;
+//         // UserMenuItems = loginControllerImp.UsersNames[];
+//         return PopupMenuItem(
+//           value: UserMenuItems,
+//           child: ListTile(
+//             title: Text(UserMenuItems),
+//             onTap: () => Get.back(result: UserMenuItems),
+//           ),
+//         );
+//       }).toList();
+//     },
+//   );
+//   showMenu(
+//     context: context,
+//     position: RelativeRect.fromLTRB(
+//       details.globalPosition.dx,
+//       details.globalPosition.dy,
+//       details.globalPosition.dx + 1,
+//       details.globalPosition.dy + 1,
+//     ),
+//     items: [
+//       PopupMenuItem(
+//               value: usersNames,
+//               child: ListTile(
+//                 title: Text(loginControllerImp.UsersNames[index].toString()),
+//                 onTap: () {},
+//     ),);
+//     ],
+//   ).then((value) {
+//     if (value != null) {
+//       print('Selected item: $value');
+//     }
+//   });
+// }
+// _showUsersMenu(BuildContext context, TapDownDetails details) {
+//   final menuItems = ['Item 1', 'Item 2', 'Item 3'];
+//   final GroupsListControllerIMP controller = Get.put(GroupsListControllerIMP());
+//   LoginControllerImp loginControllerImp = Get.put(LoginControllerImp());
+//   PopupMenuButton(itemBuilder: ((context) =>
+//   // Get.dialog(
+//   // return showDialog(
+//   //     context: context,
+//   //     builder: (BuildContext context) {
+//   //       return
+//         ListView.builder(
+//               itemCount: loginControllerImp.UsersData.length,
+//           itemBuilder: ((context, index) {
+//             dynamic usersNames = loginControllerImp.UsersNames[index];
+//             return PopupMenuItem(
+//               value: usersNames,
+//               child: ListTile(
+//                 title: Text(loginControllerImp.UsersNames[index].toString()),
+//                 onTap: () {},
+//               ),
+//             );
+//           }),
+//             ),
+//         );
+// },
+// );
+//  PopupMenuButton(
+//   itemBuilder: (BuildContext context) {
+//     return menuItems.map((String item) {
+//       return PopupMenuItem(
+//         value: item,
+//         child: ListTile(
+//           title: Text(item),
+//           onTap: () => Get.back(result: item),
+//         ),
+//       );
+//     }).toList();
+//   },
+// );
+// showMenu(
+//   context: context,
+//   position: RelativeRect.fromLTRB(
+//     details.globalPosition.dx,
+//     details.globalPosition.dy,
+//     details.globalPosition.dx + 1,
+//     details.globalPosition.dy + 1,
+//   ),
+//   items: [
+//     PopupMenuItem(
+//       value: loginControllerImp
+//           .UsersNames[index],
+//       child: ListTile(
+//         title: Text(loginControllerImp
+//             .UsersNames[loginControllerImp.UsersIds.length - 1]
+//             .toString()),
+//         onTap: () {},
+//       ),
+//     ),
+//   ],
+// ).then((value) {
+//   if (value != null) {
+//     print('Selected item: $value');
+//   }
+// });
+// }
+//  _showUsersMenu () {
+//   LoginControllerImp loginControllerImp = Get.put(LoginControllerImp());
+//     return AlertDialog(
+//       content:ListView.builder(
+//         itemBuilder:
+//         ((context, index) {
+//             dynamic usersNames = loginControllerImp.UsersNames[index];
+//             return PopupMenuItem(
+//               value: usersNames,
+//               child: ListTile(
+//                 title: Text(loginControllerImp.UsersNames[index].toString()),
+//                 onTap: () {},
+//               ),
+//             );
+//           }),),
+//     );}
+// showContextMenu(BuildContext context) {
+//   final List<Widget> menuItems = [
+//     ListTile(
+//       title: Text('Context Menu Item 1'),
+//       onTap: () {
+//         // Handle context menu item 1 action
+//       },
+//     ),
+//     ListTile(
+//       title: Text('Context Menu Item 2'),
+//       onTap: () {
+//         // Handle context menu item 2 action
+//       },
+//     ),
+//   ];
+// }
+

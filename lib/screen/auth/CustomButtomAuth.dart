@@ -28,7 +28,7 @@ class CustomButtonAuth extends StatelessWidget {
        fontWeight: FontWeight.w700,
        color: Color.fromARGB(255, 0, 141, 134)),
       ),
-      color:Colors.yellow,
+      color:Color.fromARGB(255, 232, 137, 249),
       textColor: Colors.white,
     );
   }

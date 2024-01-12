@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:p1/test_view.dart';
+import 'controller/files_view_controller.dart';
 import 'core/constants/routes.dart';
 import 'screen/auth/folders_view.dart';
 import 'screen/auth/login.dart';
@@ -10,7 +11,7 @@ import 'screen/auth/signup.dart';
 import 'screen/files_view.dart';
 import 'screen/groups_view.dart';
 // import 'package:p1/test.dart';
-
+FileControllerIMP fileControllerIMP = Get.put(FileControllerIMP());
 List<GetPage<dynamic>>? routes = [
   // GetPage(
     // name: "/signup",
@@ -23,7 +24,7 @@ List<GetPage<dynamic>>? routes = [
   GetPage(name: "/login", page: () => Login()),
   GetPage(name: "/folders_view", page: () => Folders_view()),
   GetPage(name: "/groups_view", page: () => groups_view()),
-  GetPage(name: "/files_view", page: () => files_view()),
+  GetPage(name: "/files_view", page: () => files_view(GroupId:fileControllerIMP.group_id,)),
 ];
 
 // Map<String, Widget Function(BuildContext)> routes = {

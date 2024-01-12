@@ -32,17 +32,9 @@ class Login extends StatelessWidget {
       body: WillPopScope(
         onWillPop: alertExitApp,
         child: Container(
+          color: Color.fromARGB(255, 240, 208, 197),
           padding: EdgeInsets.symmetric(vertical: 15, horizontal: 30),
-          // padding: EdgeInsets.all(5),
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              scale: 1,
-                fit: BoxFit.cover,
-                image: AssetImage(
-                  ImageAsset.background,
-                )),
-          ),
-          // alignment: Alignment.center,
+        
 
           child: Form(
             key: controller.formStateloginkey,
@@ -51,7 +43,7 @@ class Login extends StatelessWidget {
               // mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 CustomLogoForm(
-                    image: ImageAsset.logo,
+                    image: ImageAsset.folder,
                     address: "Welcome Back!",
                     sign: "Log in to your accont"),
                 Column(children: [
@@ -139,7 +131,7 @@ class Login extends StatelessWidget {
                         //       ),
                         //     );
                       },
-                      color: Colors.yellow,
+                      color: Colors.purple,
                     ),
                   ),
                   SizedBox(

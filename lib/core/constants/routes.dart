@@ -5,4 +5,5 @@ class AppRoute {
   static const String signUp = "/signup";
   static const String Folders_view = "/folders_view";
   static const String groups_view = "/groups_view";
+  static const String Files_view = "/files_view";
 }

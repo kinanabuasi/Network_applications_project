@@ -20,4 +20,13 @@ class LoginData {
 
     return response.fold((l) => l, (r) => r);
   }
+  HandleUsersData(
+    String token
+  ) async {
+    var response = await crud.postData(AppLink.usersdata, {
+    }, {
+      "token":token,
+    });
+    return response.fold((l) => l, (r) => r);
+  }
 }

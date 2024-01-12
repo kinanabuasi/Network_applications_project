@@ -32,13 +32,7 @@ class SignUp extends StatelessWidget {
         onWillPop: alertExitApp,
         child: Container(
           padding: EdgeInsets.all(5),
-          decoration: BoxDecoration(
-            image: DecorationImage(
-                fit: BoxFit.cover,
-                image: AssetImage(
-                  ImageAsset.background,
-                )),
-          ),
+         color: Color.fromARGB(255, 240, 208, 197),
           child: Form(
             key: controller.formStatesignupkey,
             child: ListView(
@@ -46,7 +40,7 @@ class SignUp extends StatelessWidget {
               // mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 CustomLogoForm(
-                    image: ImageAsset.logo,
+                    image: ImageAsset.folder,
                     address: "Welcome !",
                     sign: "Create your account"),
                 Column(

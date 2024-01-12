@@ -6,7 +6,7 @@ class CustomLogoForm extends StatelessWidget {
   final String image;
   final String address;
   final String sign;
-  double x=200;
+  double x = 200;
 // final String assetName = 'online-shop-logo.jpg';
 // final String svg = SvgPicture.asset('online-shop-logo.jpg'
 // ) as String;
@@ -16,14 +16,14 @@ class CustomLogoForm extends StatelessWidget {
       required this.image,
       required this.address,
       required this.sign,
-      this.mycontroller,x})
+      this.mycontroller,
+      x})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-      
         Container(
           width: x,
           height: x,
@@ -73,62 +73,68 @@ class CustomFolderForm extends StatelessWidget {
   final String image;
   final String address;
   final String sign;
+  // Function? OnPressed;
 
   TextEditingController? mycontroller;
-  CustomFolderForm(
-      {Key? key,
-      required this.image,
-      required this.address,
-      required this.sign,
-      this.mycontroller,
-      })
-      : super(key: key);
+  CustomFolderForm({
+    Key? key,
+    required this.image,
+    required this.address,
+    required this.sign,
+    this.mycontroller,
+    // this.OnPressed,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          width: 100,
-          height: 100,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            image: DecorationImage(
-               scale:0.2,
-              fit: BoxFit.fill,
-              image: AssetImage(
-                image,
+    return 
+    // InkWell(
+      // onTap: OnPressed!(),
+      // child:
+       Column(
+        children: [
+          Container(
+            width: 100,
+            height: 100,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              image: DecorationImage(
+                scale: 0.2,
+                fit: BoxFit.fill,
+                image: AssetImage(
+                  image,
+                ),
               ),
             ),
           ),
-        ),
-        SizedBox(
-          height: 10,
-        ),
-        Text(
-          address,
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            fontSize: 12,
-            fontWeight: FontWeight.bold,
-            color: Colors.black,
+          SizedBox(
+            height: 10,
           ),
-        ),
-        SizedBox(
-          height: 5,
-        ),
-        Text(
-          sign,
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 9,
+          Text(
+            address,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
+            ),
           ),
-        ),
-        // SizedBox(
-        //   height: 5,
+          SizedBox(
+            height: 5,
+          ),
+          Text(
+            sign,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 9,
+            ),
+          ),
+          // SizedBox(
+          //   height: 5,
+          // ),
+        ],
         // ),
-      ],
       // ),
     );
   }
